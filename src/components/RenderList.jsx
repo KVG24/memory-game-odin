@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default function RenderList({ data }) {
+export default function RenderList({ data, handleClick }) {
     const [randomList, setRandomList] = useState([]);
 
     useEffect(() => {
@@ -17,12 +17,17 @@ export default function RenderList({ data }) {
         setRandomList([...indexes].map((i) => values[i]));
     }, [data]);
 
-    console.log(randomList);
+    // console.log(randomList);
 
     return (
         <div className="warframe-list">
             {randomList.map((item) => (
-                <div key={item.name} className="warframe-card">
+                <div
+                    key={item.name}
+                    id={item.name}
+                    className="warframe-card"
+                    onClick={handleClick}
+                >
                     <img
                         src={`src/assets/${item.url}`}
                         alt={item.name}
