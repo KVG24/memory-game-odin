@@ -1,13 +1,15 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import RenderList from "./components/RenderList";
 import RenderGameInfo from "./components/RenderGameInfo";
+import shuffleSet from "./components/shuffleSet";
 
 function App() {
-    const [warframes, setWarframes] = useState([]);
+    // click logic
     const [score, setScore] = useState(0);
     const [bestScore, setBestScore] = useState(0);
     const [clickedWarframes, setClickedWarframes] = useState(new Set());
+    const [clicked, setClicked] = useState(false);
 
     function handleClickOnWarframe(e) {
         if (clickedWarframes.has(e.currentTarget.id)) {
@@ -25,9 +27,12 @@ function App() {
             updatedClicked.add(e.currentTarget.id);
             setClickedWarframes(updatedClicked);
         }
-
+        setClicked(true);
         // console.log(clickedWarframes);
     }
+
+    // data fetch
+    const [warframes, setWarframes] = useState([]);
 
     useEffect(() => {
         fetch("src/data/warframes.json")
@@ -40,13 +45,34 @@ function App() {
             });
     }, []);
 
-    const memoizedWarframes = useMemo(() => warframes, [warframes]);
+    // warframe initial list building
+    const [warframesList, setWarframesList] = useState([]);
+    const [indexes, setIndexes] = useState(new Set());
+
+    useEffect(() => {
+        const values = Object.values(warframes);
+        if (values.length === 0) return;
+
+        while (indexes.size < 10) {
+            const randomIndex = Math.floor(Math.random() * values.length);
+            setIndexes(indexes.add(randomIndex));
+        }
+        setWarframesList([...indexes].map((i) => values[i]));
+    }, [warframes, indexes]);
+
+    // shuffle warframes
+    useEffect(() => {
+        const values = Object.values(warframes);
+        const newIndexes = shuffleSet(indexes);
+        setWarframesList([...newIndexes].map((i) => values[i]));
+        setClicked(false);
+    }, [clicked, indexes, warframes]);
 
     return (
         <>
             <RenderGameInfo score={score} bestScore={bestScore} />
             <RenderList
-                data={memoizedWarframes}
+                warframesList={warframesList}
                 handleClick={handleClickOnWarframe}
             />
         </>

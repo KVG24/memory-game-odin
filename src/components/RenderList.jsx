@@ -1,39 +1,19 @@
-import { useState, useEffect } from "react";
-
-export default function RenderList({ data, handleClick }) {
-    const [randomList, setRandomList] = useState([]);
-
-    useEffect(() => {
-        const values = Object.values(data);
-        if (values.length === 0) return;
-
-        const indexes = new Set();
-
-        while (indexes.size < 10) {
-            const randomIndex = Math.floor(Math.random() * values.length);
-            indexes.add(randomIndex);
-        }
-
-        setRandomList([...indexes].map((i) => values[i]));
-    }, [data]);
-
-    // console.log(randomList);
-
+export default function RenderList({ warframesList, handleClick }) {
     return (
         <div className="warframe-list">
-            {randomList.map((item) => (
+            {warframesList.map((wf) => (
                 <div
-                    key={item.name}
-                    id={item.name}
+                    key={wf.name}
+                    id={wf.name}
                     className="warframe-card"
                     onClick={handleClick}
                 >
                     <img
-                        src={`src/assets/${item.url}`}
-                        alt={item.name}
+                        src={`src/assets/${wf.url}`}
+                        alt={wf.name}
                         width={100}
                     />
-                    <p>{item.name}</p>
+                    <p>{wf.name}</p>
                 </div>
             ))}
         </div>
