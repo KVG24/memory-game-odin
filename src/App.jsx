@@ -10,7 +10,7 @@ function App() {
     const [clickedWarframes, setClickedWarframes] = useState(new Set());
 
     function handleClickOnWarframe(e) {
-        if (clickedWarframes.has(e.target.id)) {
+        if (clickedWarframes.has(e.currentTarget.id)) {
             setScore(0);
             setClickedWarframes(new Set());
         } else {
@@ -22,7 +22,7 @@ function App() {
             }
 
             const updatedClicked = new Set(clickedWarframes);
-            updatedClicked.add(e.target.id);
+            updatedClicked.add(e.currentTarget.id);
             setClickedWarframes(updatedClicked);
         }
 
