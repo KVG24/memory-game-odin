@@ -26,12 +26,15 @@ function App() {
     const [clickedWarframes, setClickedWarframes] = useState(new Set());
     const [clicked, setClicked] = useState(false);
     const [wrongClick, setWrongClick] = useState(false);
+    const [clickedWarframe, setClickedWarframe] = useState("");
     let newScore;
 
     function handleClickOnWarframe(e) {
-        if (clickedWarframes.has(e.currentTarget.id)) {
+        const warframeName = e.currentTarget.id;
+        if (clickedWarframes.has(warframeName)) {
             setScore(0);
             setClickedWarframes(new Set());
+            setClickedWarframe(warframeName);
             setWrongClick(true);
         } else {
             newScore = score + 1;
@@ -42,7 +45,7 @@ function App() {
             }
             setWrongClick(false);
             const updatedClicked = new Set(clickedWarframes);
-            updatedClicked.add(e.currentTarget.id);
+            updatedClicked.add(warframeName);
             setClickedWarframes(updatedClicked);
         }
         setClicked(true);
@@ -100,6 +103,7 @@ function App() {
                 score={score}
                 bestScore={bestScore}
                 wrongClick={wrongClick}
+                clickedWarframe={clickedWarframe}
             />
             <RenderList
                 warframesList={warframesRenderList}
