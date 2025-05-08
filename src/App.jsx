@@ -99,15 +99,12 @@ function App() {
     // main render
     return (
         <>
-            <RenderGameInfo
-                score={score}
-                bestScore={bestScore}
-                wrongClick={wrongClick}
-                clickedWarframe={clickedWarframe}
-            />
+            <RenderGameInfo score={score} bestScore={bestScore} />
             <RenderList
                 warframesList={warframesRenderList}
                 handleClick={handleClickOnWarframe}
+                wrongClick={wrongClick}
+                clickedWarframe={clickedWarframe}
             />
         </>
     );
