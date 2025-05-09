@@ -27,7 +27,6 @@ body {
 
 .game-info-container {
     padding: 1rem;
-    border-radius: 30px;
     border: 1px solid #777777;
     background-color: #303030ce;
     display: flex;
@@ -53,6 +52,21 @@ body {
 .regenerate-btn {
     width: 200px;
     font-size: 1rem;
+}
+
+.github-link {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    color: white;
+    text-decoration: none;
+    background-color: #494949a8;
+    padding: 0.5rem;
+    border-radius: 10px;
+}
+
+.github-link i {
+    font-size: 2rem;
 }
 
 .warframe-list {

@@ -17,6 +17,14 @@ export default function RenderGameInfo({ score, bestScore, regenerateList }) {
             >
                 Regenerate list
             </button>
+            <a
+                href="https://github.com/KVG24/memory-game-odin"
+                className="github-link"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <i class="devicon-github-original-wordmark"></i>
+            </a>
         </div>
     );
 }
