@@ -2,7 +2,7 @@ export default function RenderList({
     warframesList,
     handleClick,
     wrongClick,
-    clickedWarframe,
+    clickedWarframeName,
 }) {
     return (
         <>
@@ -12,7 +12,9 @@ export default function RenderList({
                         key={wf.name}
                         id={wf.name}
                         className="warframe-card"
-                        onClick={handleClick}
+                        onClick={() => {
+                            handleClick(wf.name);
+                        }}
                     >
                         <img
                             src={`src/assets/${wf.url}`}
@@ -26,7 +28,7 @@ export default function RenderList({
             {wrongClick && (
                 <p className="wrong-click-notification">
                     Clicked twice on{" "}
-                    <span className="wrong-wf-name">{clickedWarframe}</span>
+                    <span className="wrong-wf-name">{clickedWarframeName}</span>
                 </p>
             )}
         </>

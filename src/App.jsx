@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import RenderList from "./components/RenderList";
 import RenderGameInfo from "./components/RenderGameInfo";
-import shuffleSet from "./components/utils";
 import RenderGameOver from "./components/RenderGameOver";
+import shuffleArray from "./components/utils";
 
 function App() {
     // data fetch
@@ -19,41 +19,6 @@ function App() {
                 console.error("Error fetching JSON:", error);
             });
     }, []);
-
-    // click logic
-    const [score, setScore] = useState(0);
-    const [bestScore, setBestScore] = useState(0);
-    const [clickedWarframes, setClickedWarframes] = useState(new Set());
-    const [clicked, setClicked] = useState(false);
-    const [wrongClick, setWrongClick] = useState(false);
-    const [clickedWarframe, setClickedWarframe] = useState("");
-    let newScore;
-
-    function handleClickOnWarframe(e) {
-        const warframeName = e.currentTarget.id;
-        if (clickedWarframes.has(warframeName)) {
-            setScore(0);
-            setClickedWarframes(new Set());
-            setClickedWarframe(warframeName);
-            setWrongClick(true);
-        } else {
-            newScore = score + 1;
-            setScore(newScore);
-
-            if (newScore > bestScore) {
-                setBestScore(newScore);
-            }
-            setWrongClick(false);
-            const updatedClicked = new Set(clickedWarframes);
-            updatedClicked.add(warframeName);
-            setClickedWarframes(updatedClicked);
-        }
-        setClicked(true);
-
-        // console.log(clickedWarframes);
-
-        if (newScore == 10) setIsGameOver(true);
-    }
 
     // warframe initial list render
     const [warframesRenderList, setWarframesRenderList] = useState([]);
@@ -71,13 +36,38 @@ function App() {
         setWarframesRenderList([...indexes].map((i) => values[i]));
     }, [warframes, indexes]);
 
-    // shuffle warframes
-    useEffect(() => {
-        const values = Object.values(warframes);
-        const newIndexes = shuffleSet(indexes);
-        setWarframesRenderList([...newIndexes].map((i) => values[i]));
-        setClicked(false);
-    }, [clicked, indexes, warframes]);
+    // click logic
+    const [score, setScore] = useState(0);
+    const [bestScore, setBestScore] = useState(0);
+    const [clickedWarframes, setClickedWarframes] = useState(new Set());
+    const [clickedWarframeName, setClickedWarframeName] = useState("");
+    const [wrongClick, setWrongClick] = useState(false);
+    let newScore;
+
+    function handleClickOnWarframe(warframeName) {
+        if (clickedWarframes.has(warframeName)) {
+            setScore(0);
+            setClickedWarframes(new Set());
+            setClickedWarframeName(warframeName);
+            setWrongClick(true);
+        } else {
+            newScore = score + 1;
+            setScore(newScore);
+
+            if (newScore > bestScore) {
+                setBestScore(newScore);
+            }
+            setWrongClick(false);
+            const updatedClicked = new Set(clickedWarframes);
+            updatedClicked.add(warframeName);
+            setClickedWarframes(updatedClicked);
+        }
+
+        if (newScore == 10) setIsGameOver(true);
+
+        // shuffle cards
+        setWarframesRenderList((prev) => shuffleArray(prev));
+    }
 
     // game over logic
     const [isGameOver, setIsGameOver] = useState(false);
@@ -86,7 +76,6 @@ function App() {
         setScore(0);
         setBestScore(0);
         setClickedWarframes(new Set());
-        setClicked(false);
         setWrongClick(false);
         setIndexes(new Set());
         setIsGameOver(false);
@@ -96,15 +85,27 @@ function App() {
         return <RenderGameOver onClick={handleGameOver} />;
     }
 
+    function regenerateList() {
+        setScore(0);
+        setBestScore(0);
+        setClickedWarframes(new Set());
+        setWrongClick(false);
+        setIndexes(new Set());
+    }
+
     // main render
     return (
         <>
-            <RenderGameInfo score={score} bestScore={bestScore} />
+            <RenderGameInfo
+                score={score}
+                bestScore={bestScore}
+                regenerateList={regenerateList}
+            />
             <RenderList
                 warframesList={warframesRenderList}
                 handleClick={handleClickOnWarframe}
                 wrongClick={wrongClick}
-                clickedWarframe={clickedWarframe}
+                clickedWarframeName={clickedWarframeName}
             />
         </>
     );

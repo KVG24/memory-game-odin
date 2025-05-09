@@ -1,4 +1,4 @@
-export default function RenderGameInfo({ score, bestScore }) {
+export default function RenderGameInfo({ score, bestScore, regenerateList }) {
     return (
         <div className="game-info-container">
             <h1 className="game-name">Warframe Memory Game</h1>
@@ -10,6 +10,13 @@ export default function RenderGameInfo({ score, bestScore }) {
                 <p>Score: {score}</p>
                 <p>Best score: {bestScore}</p>
             </div>
+            <button
+                type="button"
+                className="regenerate-btn"
+                onClick={regenerateList}
+            >
+                Regenerate list
+            </button>
         </div>
     );
 }
