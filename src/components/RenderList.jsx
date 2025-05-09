@@ -17,7 +17,7 @@ export default function RenderList({
                         }}
                     >
                         <img
-                            src={`src/assets/${wf.url}`}
+                            src={`/assets/${wf.url}`}
                             alt={wf.name}
                             width={100}
                         />

@@ -10,7 +10,7 @@ function App() {
     const [warframes, setWarframes] = useState([]);
 
     useEffect(() => {
-        fetch("src/data/warframes.json")
+        fetch("/data/warframes.json")
             .then((response) => response.json())
             .then((data) => {
                 setWarframes(data);
