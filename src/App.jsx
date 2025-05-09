@@ -29,7 +29,7 @@ function App() {
         if (values.length === 0) return;
 
         // generate random 10 indexes to get from json
-        while (indexes.size < 10) {
+        while (indexes.size < 12) {
             const randomIndex = Math.floor(Math.random() * values.length);
             setIndexes(indexes.add(randomIndex));
         }
