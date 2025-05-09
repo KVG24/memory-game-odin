@@ -7,7 +7,7 @@ export default function RenderGameInfo({ score, bestScore, regenerateList }) {
                 Warframe twice will reset the score
             </p>
             <div className="score-container">
-                <p>Score: {score}</p>
+                <p>Score: {score} / 12</p>
                 <p>Best score: {bestScore}</p>
             </div>
             <button

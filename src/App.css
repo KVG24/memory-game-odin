@@ -59,10 +59,13 @@ body {
     bottom: 20px;
     right: 20px;
     color: white;
-    text-decoration: none;
     background-color: #494949a8;
     padding: 0.5rem;
     border-radius: 10px;
+}
+
+.github-link:hover {
+    border: 2px solid white;
 }
 
 .github-link i {
@@ -135,8 +138,8 @@ button {
 }
 
 button:hover {
-    transform: scale(1.1);
-    transition: all 0.2s ease-in-out;
+    color: black;
+    background-color: white;
 }
 
 .won-msg {
@@ -210,7 +213,8 @@ button:hover {
 }
 
 @media (hover: none) and (pointer: coarse) {
-    .warframe-card:hover {
+    .warframe-card:hover,
+    button:hover {
         transform: none;
     }
 }

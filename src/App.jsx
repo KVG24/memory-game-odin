@@ -63,7 +63,7 @@ function App() {
             setClickedWarframes(updatedClicked);
         }
 
-        if (newScore == 10) setIsGameOver(true);
+        if (newScore == 12) setIsGameOver(true);
 
         // shuffle cards
         setWarframesRenderList((prev) => shuffleArray(prev));
